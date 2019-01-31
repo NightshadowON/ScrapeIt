@@ -1,0 +1,67 @@
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+
+:: variables
+SET parent=%~dp0
+SET me=%~nx0
+
+SET SHORTNAME=arcade
+SET LONGNAME=MAME_2003pi
+
+::Use N worker threads to process roms. (default 1)
+SET WORKTHREADS=1
+
+::Comma-separated order to prefer images, s=snap, t=title, m=marquee, c=cabinet, b=boxart, 3b=3D-boxart, fly=flyer. (default "t,m,s,c")
+SET IMGSRC=s,t,m,c,b,3b,f
+::Comma-separated order to prefer mame sources, ss=screenscraper, adb=arcadeitalia, mamedb=mamedb-mirror, gdb=theGamesDB-neogeo (default "adb,gdb")
+SET DATAB=adb,ss,mamedb,gdb
+
+::The username for registered ScreenScraper users.
+SET SSUSER=username
+::The password for registered ScreenScraper users.
+SET SSPASS=password
+
+SET EMUDIR=C:\Emulation\%LONGNAME%\
+SET XMLFILE="%EMUDIR%gamelist.xml"
+SET XMLSSFILE="%EMUDIR%gamelist_ss.xml"
+SET XMLMAMEDBFILE="%EMUDIR%gamelist_mamedb.xml"
+SET XMLADBFILE="%EMUDIR%gamelist_adb.xml"
+SET XMLGDBFILE="%EMUDIR%gamelist_gdb.xml"
+SET ROMDIR="%EMUDIR%roms"
+SET CARTDIR="%EMUDIR%cart"
+SET SNAPDIR="%EMUDIR%snap"
+SET FANARTDIR="%EMUDIR%fanart"
+SET BANNERDIR="%EMUDIR%banner"
+SET LOGODIR="%EMUDIR%logo"
+SET BOXARTDIR="%EMUDIR%3dboxart"
+SET CARTLABELDIR="%EMUDIR%cartlabel"
+SET MIX3DIR="%EMUDIR%mix3"
+SET MIX4DIR="%EMUDIR%mix4"
+SET BOXDIR="%EMUDIR%box"
+SET MARQUEEDIR="%EMUDIR%marquee"
+SET VIDEODIR="%EMUDIR%video"
+SET TITLEDIR="%EMUDIR%title"
+SET CABINETDIR="%EMUDIR%cabinet"
+SET FLYERDIR="%EMUDIR%flyer"
+
+SET IMAGEPATH=/home/pi/.emulationstation/downloaded_images/%SHORTNAME%/
+::jpg or png, the format to write the images. (default "jpg")
+SET IMAGEFORMAT=png
+SET BOXPATH=%IMAGEPATH%box
+SET MARQUEEPATH=%IMAGEPATH%marquee
+SET VIDEOPATH=%IMAGEPATH%video
+SET SNAPPATH=%IMAGEPATH%snap
+SET TITLEPATH=%IMAGEPATH%title
+SET CABINETPATH=%IMAGEPATH%cabinet
+SET BOXARTPATH=%IMAGEPATH%3dboxart
+SET FLYERPATH=%IMAGEPATH%flyer
+
+::scraper -mame -mame_img=t -mame_src=%DATAB% -skip_check -image_dir=%TITLEDIR% -output_file="" -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+::scraper -mame -mame_img=c -mame_src=%DATAB% -skip_check -image_dir=%CABINETDIR% -output_file="" -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+::scraper -mame -mame_img=b -mame_src=%DATAB% -skip_check -image_dir=%BOXDIR% -output_file="" -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+::scraper -mame -mame_img=3b -mame_src=%DATAB% -skip_check -image_dir=%BOXARTDIR% -output_file="" -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+::scraper -mame -mame_img=fly -mame_src=%DATAB% -skip_check -image_dir=%FLYERDIR% -output_file="" -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+scraper -mame -mame_img=s -mame_src=ss -skip_check -download_images=true -output_file=%XMLFILE% -download_marquees=true -download_videos=true -image_dir=%SNAPDIR% -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -image_path=%SNAPPATH% -marquee_dir=%MARQUEEDIR% -marquee_suffix="" -marquee_path=%MARQUEEPATH% -video_dir=%VIDEODIR% -video_suffix="" -video_path=%VIDEOPATH% -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+scraper -mame -mame_img=s -mame_src=adb -skip_check -download_images=true -output_file=%XMLADBFILE% -download_marquees=true -download_videos=true -image_dir=%SNAPDIR% -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -image_path=%SNAPPATH% -marquee_dir=%MARQUEEDIR% -marquee_suffix="" -marquee_path=%MARQUEEPATH% -video_dir=%VIDEODIR% -video_suffix="" -video_path=%VIDEOPATH% -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+scraper -mame -mame_img=s -mame_src=mamedb -skip_check -download_images=true -output_file=%XMLMAMEDBFILE% -download_marquees=true -download_videos=true -image_dir=%SNAPDIR% -img_format=%IMAGEFORMAT% -max_width=0 -image_suffix="" -image_path=%SNAPPATH% -marquee_dir=%MARQUEEDIR% -marquee_suffix="" -marquee_path=%MARQUEEPATH% -video_dir=%VIDEODIR% -video_suffix="" -video_path=%VIDEOPATH% -use_nointro_name=false -workers=%WORKTHREADS% -ss_user=%SSUSER% -ss_password=%SSPASS% -rom_dir=%ROMDIR%
+
+pause
