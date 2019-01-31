@@ -4,6 +4,8 @@ Windows Command CMD script using Selph's Scraper (https://github.com/sselph/scra
 Download scraper.exe from Selph's Scraper and put in same directory as this script.
 
 Modify CMD file before running:
+'''
+```
 SHORTNAME = name of emulator config in RetroPie (i.e. snes, arcade, atari2600)
 LONGNAME = folder name to save scraped information to (i.e. Nintendo SNES, MAME_2003pi)
 EMUDIR = directory where LONGNAME is located, can be network drive (i.e. c:\emulation\, \\network\network_share\emulation
